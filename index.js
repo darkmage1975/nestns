@@ -1,31 +1,37 @@
-'use strict';
-const express = require('express');
+const express = require('express')
+const bodyParser = require('body-parser')
+
+// Import the appropriate service and chosen wrappers
 const {
   dialogflow,
-  HtmlResponse,
-} = require('actions-on-google');
-const bodyParser = require('body-parser');
-const port = process.env.PORT || 3000;
-const app = dialogflow({debug:true});
+  Image,
+} = require('actions-on-google')
 
-app.intent('welcome', (conv) => {
-  if (!conv.surface.capabilities
-      .has('actions.capability.INTERACTIVE_CANVAS')) {
-    conv.close('Sorry, this device does not support Interactive Canvas!');
-    return;
-  }
-  conv.ask('Welcome! Do you want me to change color or pause spinning? ' +
-    'You can also tell me to ask you later.');
-  conv.ask(new HtmlResponse({
-    url: `https://aa2010.herokuapp.com`,
-  }));
-});
+// Create an app instance
+const app = dialogflow()
 
-const expressApp = express().use(bodyParser.json());
-expressApp.post('/webhook', app);
+// Register handlers for Dialogflow intents
 
-expressApp.get('/da', (req,res)=>{
-    res.send("Sheeesh");
-});
+app.intent('Default Welcome Intent', conv => {
+  conv.ask('Ciao, come va?')
+  conv.ask(`Ecco l'immagine di un gatto`)
+  conv.ask(new Image({
+    url: 'https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/160204193356-01-cat-500.jpg',
+    alt: 'Un gatto',
+  }))
+})
 
-expressApp.listen(port);
+// Intent in Dialogflow called `Goodbye`
+app.intent('Addio', conv => {
+  conv.close('A dopo!')
+})
+
+app.intent('Default Fallback Intent', conv => {
+  conv.ask(`Non ho capito, puoi riprovare?`)
+})
+
+const expressApp = express().use(bodyParser.json())
+
+expressApp.post('/fulfillment', app)
+
+expressApp.listen(3000)
