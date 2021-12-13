@@ -13,15 +13,15 @@ const {
 // Create an app instance
 const app = actionssdk({debug: true});
 
-/*express()
+express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/cool', (req, res) => res.send(cool()))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))*/
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-app.intent('actions.intent.Welcome', (conv) => {
+/*app.intent('actions.intent.Welcome', (conv) => {
   	conv.ask('Ciaone!');
-});
+});*/
 
