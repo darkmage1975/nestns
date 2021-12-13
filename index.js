@@ -11,17 +11,12 @@ const {
 } = require('actions-on-google');
 
 // Create an app instance
-const app = actionssdk({debug: true});
+const app = dialogflow({debug: true});
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .get('/cool', (req, res) => res.send(cool()))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-app.intent('actions.intent.Welcome', (conv) => {
-  	conv.ask('Ciaone!');
+app.intent('Welcome', (conv) => {
+  console.log('welcome');
+  conv.ask('Welcome!');
 });
+
+express().use(bodyParser.json(), app).listen(PORT);
 
