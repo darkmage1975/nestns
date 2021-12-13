@@ -1,10 +1,9 @@
-const cool = require('cool-ascii-faces');
+'use strict';
 const express = require('express')
+const bodyParser = require('body-parser')
 const path = require('path')
 const PORT = process.env.PORT || 5000
-const { dialogflow, HtmlResponse } = require('actions-on-google');
-
-// Create an app instance
+const {dialogflow, HtmlResponse} = require('actions-on-google');
 const app = dialogflow({debug: true});
 
 app.intent('Welcome', (conv) => {
