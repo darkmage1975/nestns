@@ -21,7 +21,7 @@ express()
   .get('/cool', (req, res) => res.send(cool()))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-/*app.intent('actions.intent.Welcome', (conv) => {
+app.intent('actions.intent.Welcome', (conv) => {
   	conv.ask('Ciaone!');
-});*/
+});
 
